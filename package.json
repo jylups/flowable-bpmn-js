@@ -1,0 +1,56 @@
+{
+  "name": "@jylups/flowable-bpmn-js",
+  "version": "0.0.0",
+  "description": "bpmn-js modeler and viewer with the Flowable BPMN extensions",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "vitest run",
+    "dev": "vitest",
+    "all": "npm run lint && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jylups/flowable-bpmn-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jylups/bpmn-js-env/issues"
+  },
+  "homepage": "https://github.com/jylups/flowable-bpmn-js#readme",
+  "keywords": [
+    "bpmn",
+    "bpmn-js",
+    "modeler",
+    "viewer",
+    "flowable"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "bpmn-js": "^18.33.1",
+    "bpmn-js-properties-panel": "^5.65.4",
+    "@bpmn-io/properties-panel": "^3.60.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitest/browser-playwright": "^5.1.1",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "playwright": "^1.65.1",
+    "vitest": "^5.1.1"
+  }
+}
