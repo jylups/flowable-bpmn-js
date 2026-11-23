@@ -17,7 +17,7 @@ export default [
     }
   },
   {
-    files: [ '*.config.js' ],
+    files: [ '*.config.js', 'tasks/**/*.js' ],
     languageOptions: {
       globals: {
         ...globals.node
