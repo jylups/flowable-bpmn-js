@@ -17,6 +17,7 @@ import fontCss from '../../dist/assets/bpmn-font/css/bpmn-embedded.css?raw';
 import panelCss from '../../dist/assets/properties-panel.css?raw';
 import iconsCss from '../../dist/assets/flowable-bpmn-js.css?raw';
 import touchCss from '../../dist/assets/flowable-bpmn-js-touch.css?raw';
+import lintCss from '../../dist/assets/bpmn-js-bpmnlint.css?raw';
 
 
 /**
@@ -67,6 +68,7 @@ describe('browser distro', function() {
 
       expect(saved).toContain('<error id="notFound" errorCode="notFound" />');
       expect(saved).not.toContain('xmlns:activiti');
+      expect(instance.get('linting').isActive()).toBe(true);
     });
 
   });
@@ -103,6 +105,7 @@ describe('browser distro', function() {
     expect(panelCss).toContain('.bio-properties-panel');
     expect(iconsCss).toContain('.flowable-icon-mail::before');
     expect(touchCss).toContain('(pointer: coarse)');
+    expect(lintCss).toContain('.bjsl-');
   });
 
 });

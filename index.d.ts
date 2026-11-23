@@ -46,3 +46,26 @@ export const FlowableDrawModule: ModuleDeclaration;
  * touch targets larger.
  */
 export const TouchModule: ModuleDeclaration;
+
+/**
+ * Lints the diagram with the Flowable rules while it is edited
+ * (bpmn-js-bpmnlint). Included in Modeler; `linting.active: false` hides the
+ * issues, `linting.bpmnlint` sets another linter configuration.
+ */
+export const FlowableLintModule: ModuleDeclaration;
+
+/**
+ * The Flowable lint rules (bpmnlint rule factories) by name.
+ */
+export const FLOWABLE_RULES: Record<string, () => { check(node: any, reporter: any): void }>;
+
+/**
+ * A bpmnlint configuration with all Flowable rules as errors.
+ */
+export const flowableLintConfig: { rules: Record<string, string> };
+
+/**
+ * The `{ config, resolver }` that bpmn-js-bpmnlint takes, for a bpmnlint
+ * configuration that uses `flowable/<rule>` rules.
+ */
+export function createFlowableLinterConfig(config?: object): { config: object; resolver: object };

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://flowable.org/bpmn"
+             id="Definitions_1">
+  <process id="Process_1" isExecutable="true">
+    <serviceTask id="NoImplementation" name="No implementation" />
+    <serviceTask id="ClassTask" flowable:class="org.example.Lookup" />
+    <serviceTask id="HttpNoUrl" flowable:type="http">
+      <extensionElements>
+        <flowable:field name="requestMethod">
+          <flowable:string>GET</flowable:string>
+        </flowable:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="HttpTask" flowable:type="http">
+      <extensionElements>
+        <flowable:field name="requestUrl" expression="${baseUrl}/orders" />
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="WorkerNoTopic" flowable:type="external-worker" />
+    <serviceTask id="MailTask" flowable:type="mail" />
+    <userTask id="BadDueDate" flowable:dueDate="tomorrow" />
+    <userTask id="DueDuration" flowable:dueDate="P2DT4H" />
+    <userTask id="DueExpression" flowable:dueDate="${dueDate}" />
+    <intermediateCatchEvent id="BadDuration">
+      <timerEventDefinition>
+        <timeDuration>15 minutes</timeDuration>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <intermediateCatchEvent id="CronCycle">
+      <timerEventDefinition>
+        <timeCycle>0 0/5 * * * ?</timeCycle>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <intermediateCatchEvent id="IsoCycle">
+      <timerEventDefinition>
+        <timeCycle flowable:endDate="2027-01-01T00:00:00">R3/PT1H</timeCycle>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <intermediateCatchEvent id="BadEndDate">
+      <timerEventDefinition>
+        <timeCycle flowable:endDate="next year">R3/PT1H</timeCycle>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <intermediateCatchEvent id="EmptyTimer">
+      <timerEventDefinition />
+    </intermediateCatchEvent>
+    <scriptTask id="BadRetry" scriptFormat="groovy" flowable:async="true">
+      <extensionElements>
+        <flowable:failedJobRetryTimeCycle>every 5 minutes</flowable:failedJobRetryTimeCycle>
+      </extensionElements>
+      <script>1</script>
+    </scriptTask>
+    <scriptTask id="GoodRetry" scriptFormat="groovy" flowable:async="true">
+      <extensionElements>
+        <flowable:failedJobRetryTimeCycle>R5/PT10M</flowable:failedJobRetryTimeCycle>
+      </extensionElements>
+      <script>1</script>
+    </scriptTask>
+    <callActivity id="NoCalledElement" />
+    <callActivity id="CallsOrder" calledElement="order" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="NoImplementation_di" bpmnElement="NoImplementation"><dc:Bounds x="100" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ClassTask_di" bpmnElement="ClassTask"><dc:Bounds x="240" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="HttpNoUrl_di" bpmnElement="HttpNoUrl"><dc:Bounds x="380" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="HttpTask_di" bpmnElement="HttpTask"><dc:Bounds x="520" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WorkerNoTopic_di" bpmnElement="WorkerNoTopic"><dc:Bounds x="660" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="MailTask_di" bpmnElement="MailTask"><dc:Bounds x="800" y="60" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BadDueDate_di" bpmnElement="BadDueDate"><dc:Bounds x="100" y="180" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DueDuration_di" bpmnElement="DueDuration"><dc:Bounds x="240" y="180" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DueExpression_di" bpmnElement="DueExpression"><dc:Bounds x="380" y="180" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BadDuration_di" bpmnElement="BadDuration"><dc:Bounds x="132" y="322" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CronCycle_di" bpmnElement="CronCycle"><dc:Bounds x="272" y="322" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IsoCycle_di" bpmnElement="IsoCycle"><dc:Bounds x="412" y="322" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BadEndDate_di" bpmnElement="BadEndDate"><dc:Bounds x="552" y="322" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EmptyTimer_di" bpmnElement="EmptyTimer"><dc:Bounds x="692" y="322" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BadRetry_di" bpmnElement="BadRetry"><dc:Bounds x="100" y="420" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GoodRetry_di" bpmnElement="GoodRetry"><dc:Bounds x="240" y="420" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NoCalledElement_di" bpmnElement="NoCalledElement"><dc:Bounds x="380" y="420" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallsOrder_di" bpmnElement="CallsOrder"><dc:Bounds x="520" y="420" width="100" height="80" /></bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
