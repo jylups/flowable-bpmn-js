@@ -37,3 +37,12 @@ export const FlowableXMLModule: ModuleDeclaration;
  * and NavigatedViewer.
  */
 export const FlowableDrawModule: ModuleDeclaration;
+
+/**
+ * Touch editing for the modeler: tap, drag, pan, pinch zoom, double tap to
+ * edit labels, and creating and connecting from the palette and context pad.
+ * Optional: add it with `additionalModules`. It turns itself on only where
+ * `(pointer: coarse)` matches; `assets/flowable-bpmn-js-touch.css` makes the
+ * touch targets larger.
+ */
+export const TouchModule: ModuleDeclaration;

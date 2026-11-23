@@ -16,6 +16,7 @@ import diagramJsCss from '../../dist/assets/diagram-js.css?raw';
 import fontCss from '../../dist/assets/bpmn-font/css/bpmn-embedded.css?raw';
 import panelCss from '../../dist/assets/properties-panel.css?raw';
 import iconsCss from '../../dist/assets/flowable-bpmn-js.css?raw';
+import touchCss from '../../dist/assets/flowable-bpmn-js-touch.css?raw';
 
 
 /**
@@ -101,6 +102,7 @@ describe('browser distro', function() {
     expect(fontCss).toContain('@font-face');
     expect(panelCss).toContain('.bio-properties-panel');
     expect(iconsCss).toContain('.flowable-icon-mail::before');
+    expect(touchCss).toContain('(pointer: coarse)');
   });
 
 });

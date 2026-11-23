@@ -19,3 +19,4 @@ export { default as NavigatedViewer } from './lib/NavigatedViewer.js';
 
 export { default as FlowableXMLModule } from './lib/xml/index.js';
 export { default as FlowableDrawModule } from './lib/draw/index.js';
+export { default as TouchModule } from './lib/features/touch/index.js';

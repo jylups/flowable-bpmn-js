@@ -10,7 +10,7 @@
  *   dist/flowable-bpmn-navigated-viewer.development.js
  *   dist/flowable-bpmn-navigated-viewer.production.min.js
  *   dist/assets/diagram-js.css, bpmn-js.css, bpmn-font/, properties-panel.css,
- *     flowable-bpmn-js.css
+ *     flowable-bpmn-js.css, flowable-bpmn-js-touch.css
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,7 +36,8 @@ const ASSETS = [
   [ 'bpmn-js', 'dist/assets/bpmn-js.css', 'bpmn-js.css' ],
   [ 'bpmn-js', 'dist/assets/bpmn-font', 'bpmn-font' ],
   [ '@bpmn-io/properties-panel', 'dist/assets/properties-panel.css', 'properties-panel.css' ],
-  [ null, 'assets/flowable-bpmn-js.css', 'flowable-bpmn-js.css' ]
+  [ null, 'assets/flowable-bpmn-js.css', 'flowable-bpmn-js.css' ],
+  [ null, 'assets/flowable-bpmn-js-touch.css', 'flowable-bpmn-js-touch.css' ]
 ];
 
 const BANNER = `/*! ${ pkg.name } ${ pkg.version } | MIT | bpmn-js (c) Camunda Services GmbH, bpmn.io license; keep the bpmn.io watermark visible */`;
