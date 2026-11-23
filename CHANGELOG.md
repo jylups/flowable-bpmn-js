@@ -4,6 +4,10 @@ All notable changes to this package are documented here.
 
 ## Unreleased
 
+## 0.1.0
+
+First stable release, with the features of 0.1.0-next.0.
+
 ## 0.1.0-next.0
 
 First prerelease: a bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle descriptor, behaviors and properties panel built in.
