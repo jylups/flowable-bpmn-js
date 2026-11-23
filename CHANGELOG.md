@@ -4,6 +4,10 @@ All notable changes to this package are documented here.
 
 ## Unreleased
 
+## 0.1.0-next.0
+
+First prerelease: a bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle descriptor, behaviors and properties panel built in.
+
 * `DOCS`: add the integration guide for apps (Vite, styles, panel container, `.bpmn` and `.bpmn20.xml` files), and build the distro before packing ([jylups/bpmn-js-env#46](https://github.com/jylups/bpmn-js-env/issues/46))
 * `FEAT`: open new diagrams as executable Flowable processes (`createDiagram`, `createNewDiagramXML`), and add theme hooks: CSS custom properties for shape, label and watermark colors ([jylups/bpmn-js-env#45](https://github.com/jylups/bpmn-js-env/issues/45))
 * `FEAT`: lint with Flowable rules (service task implementation, valid durations, called element) in the modeler, with bpmn-js-bpmnlint ([jylups/bpmn-js-env#44](https://github.com/jylups/bpmn-js-env/issues/44))
