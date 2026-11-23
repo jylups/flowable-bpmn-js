@@ -12,6 +12,7 @@ bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle d
 | `Viewer` | bpmn-js `Viewer` with the Flowable descriptor |
 | `NavigatedViewer` | bpmn-js `NavigatedViewer` (zoom and scroll) with the Flowable descriptor |
 | `FlowableXMLModule` | the import and save steps below, included in all three |
+| `FlowableDrawModule` | draws the typed service tasks with their icons, included in all three |
 
 All three read and write models as Flowable needs them:
 
@@ -31,6 +32,7 @@ import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import '@bpmn-io/properties-panel/dist/assets/properties-panel.css';
+import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js.css';
 
 const modeler = new Modeler({
   container: '#canvas',
@@ -58,6 +60,8 @@ Choosing a type in the replace menu is one undo step:
 
 A typed task also gets a "Service task" entry that removes the type.
 
+Typed tasks are drawn with their own icon instead of the service task gear, in the modeler and the viewers. The icons were drawn for this project. `assets/flowable-bpmn-js.css` shows them in the palette and the replace menu; it fills them with the text color, so they follow the theme like the bpmn-js icons.
+
 ## Browser distro
 
 For pages without a bundler, `dist/` has one script per entry point. Each exposes the global `FlowableBpmnJS`:
@@ -67,6 +71,7 @@ For pages without a bundler, `dist/` has one script per entry point. Each expose
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-js.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/properties-panel.css">
+<link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/flowable-bpmn-js.css">
 <script src="https://unpkg.com/@jylups/flowable-bpmn-js/dist/flowable-bpmn-modeler.production.min.js"></script>
 <script>
   const modeler = new FlowableBpmnJS({ container: '#canvas', propertiesPanel: { parent: '#properties' } });
@@ -96,6 +101,7 @@ npm test              # Modeler and Viewer specs
 npm run test:types    # compiles test/types/usage.ts against the typings
 npm run distro        # builds dist/ with Rollup
 npm run test:distro   # loads each dist script in the browser
+npm run icons         # regenerates assets/flowable-bpmn-js.css from the icons (lint checks it)
 npm run all           # everything above, as CI and the release workflow run it
 ```
 

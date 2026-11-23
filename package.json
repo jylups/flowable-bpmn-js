@@ -8,6 +8,7 @@
       "types": "./index.d.ts",
       "default": "./index.js"
     },
+    "./assets/*": "./assets/*",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
@@ -15,16 +16,18 @@
     "index.js",
     "index.d.ts",
     "lib",
+    "assets",
     "dist"
   ],
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . && node tasks/build-icons-css.js --check",
     "test": "vitest run",
     "dev": "vitest",
     "distro": "rollup -c",
     "test:distro": "vitest run --config vitest.distro.config.js",
     "all": "npm run lint && npm test && npm run test:types && npm run distro && npm run test:distro",
-    "test:types": "tsc -p test/types"
+    "test:types": "tsc -p test/types",
+    "icons": "node tasks/build-icons-css.js"
   },
   "repository": {
     "type": "git",
@@ -54,7 +57,8 @@
     "@jylups/flowable-bpmn-js-behaviors": "^0.1.0",
     "@jylups/flowable-bpmn-moddle": "^0.1.0",
     "bpmn-js": "^18.33.1",
-    "bpmn-js-properties-panel": "^5.65.4"
+    "bpmn-js-properties-panel": "^5.65.4",
+    "tiny-svg": "^4.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

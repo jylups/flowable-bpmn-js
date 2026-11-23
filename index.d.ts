@@ -30,3 +30,10 @@ export class NavigatedViewer<ServiceMap = null> extends BpmnNavigatedViewer<Serv
  * NavigatedViewer.
  */
 export const FlowableXMLModule: ModuleDeclaration;
+
+/**
+ * Draws the typed service tasks (mail, HTTP, shell, Camel, decision, case,
+ * send event, external worker) with their icons. Included in Modeler, Viewer
+ * and NavigatedViewer.
+ */
+export const FlowableDrawModule: ModuleDeclaration;

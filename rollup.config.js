@@ -9,7 +9,8 @@
  *   dist/flowable-bpmn-viewer.production.min.js
  *   dist/flowable-bpmn-navigated-viewer.development.js
  *   dist/flowable-bpmn-navigated-viewer.production.min.js
- *   dist/assets/diagram-js.css, bpmn-js.css, bpmn-font/, properties-panel.css
+ *   dist/assets/diagram-js.css, bpmn-js.css, bpmn-font/, properties-panel.css,
+ *     flowable-bpmn-js.css
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -34,7 +35,8 @@ const ASSETS = [
   [ 'bpmn-js', 'dist/assets/diagram-js.css', 'diagram-js.css' ],
   [ 'bpmn-js', 'dist/assets/bpmn-js.css', 'bpmn-js.css' ],
   [ 'bpmn-js', 'dist/assets/bpmn-font', 'bpmn-font' ],
-  [ '@bpmn-io/properties-panel', 'dist/assets/properties-panel.css', 'properties-panel.css' ]
+  [ '@bpmn-io/properties-panel', 'dist/assets/properties-panel.css', 'properties-panel.css' ],
+  [ null, 'assets/flowable-bpmn-js.css', 'flowable-bpmn-js.css' ]
 ];
 
 const BANNER = `/*! ${ pkg.name } ${ pkg.version } | MIT | bpmn-js (c) Camunda Services GmbH, bpmn.io license; keep the bpmn.io watermark visible */`;
@@ -79,7 +81,7 @@ function copyAssets() {
         const target = path.join(ROOT, 'dist', 'assets', to);
 
         fs.mkdirSync(path.dirname(target), { recursive: true });
-        fs.cpSync(path.join(packageDir(name), from), target, { recursive: true });
+        fs.cpSync(path.join(name ? packageDir(name) : ROOT, from), target, { recursive: true });
       }
     }
   };

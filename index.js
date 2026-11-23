@@ -18,3 +18,4 @@ export { default as Viewer } from './lib/Viewer.js';
 export { default as NavigatedViewer } from './lib/NavigatedViewer.js';
 
 export { default as FlowableXMLModule } from './lib/xml/index.js';
+export { default as FlowableDrawModule } from './lib/draw/index.js';
