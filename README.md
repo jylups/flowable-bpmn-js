@@ -13,6 +13,7 @@ bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle d
 | `NavigatedViewer` | bpmn-js `NavigatedViewer` (zoom and scroll) with the Flowable descriptor |
 | `FlowableXMLModule` | the import and save steps below, included in all three |
 | `FlowableDrawModule` | draws the typed service tasks with their icons, included in all three |
+| `TouchModule` | touch editing for the modeler, optional (see below) |
 
 All three read and write models as Flowable needs them:
 
@@ -62,6 +63,29 @@ A typed task also gets a "Service task" entry that removes the type.
 
 Typed tasks are drawn with their own icon instead of the service task gear, in the modeler and the viewers. The icons were drawn for this project. `assets/flowable-bpmn-js.css` shows them in the palette and the replace menu; it fills them with the text color, so they follow the theme like the bpmn-js icons.
 
+## Touch
+
+`TouchModule` adds touch editing to the modeler:
+
+- tap to select, drag to move, one finger to pan and a pinch to zoom;
+- a double tap edits a label, and a tap elsewhere finishes the edit;
+- create from the palette and connect from the context pad by dragging.
+
+It turns itself on only where `(pointer: coarse)` matches, such as iPads and Android tablets, so a desktop with a mouse is unchanged. `assets/flowable-bpmn-js-touch.css` makes shapes, connections, handles and context pad entries easier to hit with a finger.
+
+```js
+import { Modeler, TouchModule } from '@jylups/flowable-bpmn-js';
+
+import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js-touch.css';
+
+const modeler = new Modeler({
+  container: '#canvas',
+  additionalModules: [ TouchModule ]
+});
+```
+
+The gestures come from [bpmn-js-touch-interaction](https://github.com/krasucki/bpmn-js-touch-interaction) 0.1.2 (MIT, see `lib/features/touch/LICENSE`). They are taken as adapted in `@jylups/cmmn-js` 0.23.0, with fixes for tablets with a trackpad, bendpoint dragging, label editing and the context pad, and use ES modules again. Changes to the original are marked `CHANGED:` in `lib/features/touch/TouchInteraction.js`.
+
 ## Browser distro
 
 For pages without a bundler, `dist/` has one script per entry point. Each exposes the global `FlowableBpmnJS`:
@@ -72,6 +96,7 @@ For pages without a bundler, `dist/` has one script per entry point. Each expose
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/properties-panel.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/flowable-bpmn-js.css">
+<link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/flowable-bpmn-js-touch.css">
 <script src="https://unpkg.com/@jylups/flowable-bpmn-js/dist/flowable-bpmn-modeler.production.min.js"></script>
 <script>
   const modeler = new FlowableBpmnJS({ container: '#canvas', propertiesPanel: { parent: '#properties' } });
