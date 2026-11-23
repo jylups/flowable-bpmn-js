@@ -1,6 +1,6 @@
 {
   "name": "@jylups/flowable-bpmn-js",
-  "version": "0.1.0-next.0",
+  "version": "0.1.0",
   "description": "bpmn-js modeler and viewer with the Flowable BPMN extensions",
   "type": "module",
   "exports": {

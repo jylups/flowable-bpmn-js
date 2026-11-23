@@ -2,10 +2,8 @@
 
 bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle descriptor ([@jylups/flowable-bpmn-moddle](https://github.com/jylups/flowable-bpmn-moddle)), modeling behaviors ([@jylups/flowable-bpmn-js-behaviors](https://github.com/jylups/flowable-bpmn-js-behaviors)) and properties panel ([@jylups/bpmn-js-properties-panel-flowable](https://github.com/jylups/bpmn-js-properties-panel-flowable)) built in.
 
-> Prerelease. Built in Phase 4 of the Flowable BPMN editor ([jylups/bpmn-js-env#39](https://github.com/jylups/bpmn-js-env/issues/39)).
-
 ```sh
-npm install @jylups/flowable-bpmn-js@next
+npm install @jylups/flowable-bpmn-js
 ```
 
 ## Entry points
@@ -154,7 +152,7 @@ These steps are for an app that bundles its code with Vite (or another bundler t
 ### 1. Install
 
 ```sh
-npm install @jylups/flowable-bpmn-js@next
+npm install @jylups/flowable-bpmn-js
 ```
 
 It brings bpmn-js, the bpmn.io properties panel, the Flowable moddle descriptor, behaviors and properties provider, and bpmnlint, as regular dependencies.
