@@ -27,7 +27,8 @@
     "test:distro": "vitest run --config vitest.distro.config.js",
     "all": "npm run lint && npm test && npm run test:types && npm run distro && npm run test:distro",
     "test:types": "tsc -p test/types",
-    "icons": "node tasks/build-icons-css.js"
+    "icons": "node tasks/build-icons-css.js",
+    "prepack": "npm run distro"
   },
   "repository": {
     "type": "git",

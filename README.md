@@ -30,11 +30,11 @@ They take the same options as their bpmn-js counterparts. `moddleExtensions` and
 ```js
 import { Modeler } from '@jylups/flowable-bpmn-js';
 
-import 'bpmn-js/dist/assets/diagram-js.css';
-import 'bpmn-js/dist/assets/bpmn-js.css';
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
-import '@bpmn-io/properties-panel/dist/assets/properties-panel.css';
-import 'bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
+import '@jylups/flowable-bpmn-js/dist/assets/diagram-js.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-js.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import '@jylups/flowable-bpmn-js/dist/assets/properties-panel.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-js-bpmnlint.css';
 import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js.css';
 
 const modeler = new Modeler({
@@ -47,7 +47,7 @@ await modeler.importXML(xml);
 const { xml: saved } = await modeler.saveXML({ format: true });
 ```
 
-The same CSS files ship in `@jylups/flowable-bpmn-js/dist/assets/`. The linting stylesheet also hides each issue list until it is opened, so leaving it out puts the lists over the diagram.
+The `dist/assets` stylesheets are copies of the upstream ones (bpmn-js, the bpmn.io properties panel, bpmn-js-bpmnlint), built into the published package. The linting stylesheet also hides each issue list until it is opened, so leaving it out puts the lists over the diagram. See [Integrating it in an app](#integrating-it-in-an-app) for the full setup.
 
 The properties panel can also be attached later with `modeler.get('propertiesPanel').attachTo(element)`.
 
@@ -142,6 +142,94 @@ const modeler = new Modeler({
 ```
 
 The gestures come from [bpmn-js-touch-interaction](https://github.com/krasucki/bpmn-js-touch-interaction) 0.1.2 (MIT, see `lib/features/touch/LICENSE`). They are taken as adapted in `@jylups/cmmn-js` 0.23.0, with fixes for tablets with a trackpad, bendpoint dragging, label editing and the context pad, and use ES modules again. Changes to the original are marked `CHANGED:` in `lib/features/touch/TouchInteraction.js`.
+
+## Integrating it in an app
+
+These steps are for an app that bundles its code with Vite (or another bundler that reads ES modules), such as Conscia Modeler. Tested with a new Vite 8 app that installs this package: no Vite configuration is needed.
+
+### 1. Install
+
+```sh
+npm install @jylups/flowable-bpmn-js
+```
+
+It brings bpmn-js, the bpmn.io properties panel, the Flowable moddle descriptor, behaviors and properties provider, and bpmnlint, as regular dependencies.
+
+### 2. Give the editor its place
+
+The modeler needs a container with a size, and the properties panel a second one. diagram-js gives the canvas no background, so set one:
+
+```html
+<div class="editor">
+  <div id="canvas"></div>
+  <div id="properties"></div>
+</div>
+```
+
+```css
+.editor { display: flex; height: 100%; }
+#canvas { flex: 1; background: white; }
+#properties { width: 320px; overflow: auto; }
+```
+
+### 3. Load the styles
+
+```js
+import '@jylups/flowable-bpmn-js/dist/assets/diagram-js.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-js.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import '@jylups/flowable-bpmn-js/dist/assets/properties-panel.css';
+import '@jylups/flowable-bpmn-js/dist/assets/bpmn-js-bpmnlint.css';
+import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js.css';
+
+// only with the touch module
+import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js-touch.css';
+```
+
+They are copies of the upstream stylesheets, so the app doesn't need to import from packages it doesn't list itself.
+
+### 4. Create the modeler
+
+```js
+import { Modeler, TouchModule } from '@jylups/flowable-bpmn-js';
+
+const modeler = new Modeler({
+  container: '#canvas',
+  propertiesPanel: { parent: '#properties' },
+  additionalModules: [ TouchModule ] // for tablets
+});
+```
+
+Use `Viewer` or `NavigatedViewer` for read-only previews. They need only the first three stylesheets and `flowable-bpmn-js.css`.
+
+The modeler is about 1.6 MB minified (460 KB gzipped), mostly bpmn-js and the bpmn.io properties panel. Vite warns about the chunk size. Loading the editor with a dynamic `import()` keeps it out of the app's first chunk.
+
+### 5. Open and save files
+
+Flowable deploys BPMN 2.0 XML files named `*.bpmn20.xml` or `*.bpmn`. Both are the same format, so the editor opens and saves them the same way:
+
+```js
+// opening: a file picker with accept=".bpmn,.bpmn20.xml,.xml", or a dropped file
+const { warnings } = await modeler.importXML(await file.text());
+
+// a new file
+await modeler.createDiagram({ processId: 'invoice', processName: 'Invoice' });
+
+// saving: keep the file's name and extension
+const { xml } = await modeler.saveXML({ format: true });
+```
+
+- **Older models:** files written with the Activiti namespace open as Flowable and save with the `flowable` prefix.
+- **Unknown elements:** `flowable:*` elements the editor doesn't know are kept.
+- **Changes:** listen to `commandStack.changed` to track unsaved changes. Undo history starts over with each `importXML`.
+
+### 6. Show problems
+
+Import warnings come back from `importXML`. Lint issues come with each `linting.completed` event, as `{ elementId: [ { message, category, rule } ] }`. A problems view can list both and select an element with `modeler.get('selection').select(element)` and `modeler.get('canvas').scrollToElement(element)`.
+
+### 7. TypeScript
+
+Typings come with the package. Use `"moduleResolution": "bundler"`, which bpmn-js' own typings need.
 
 ## Browser distro
 
