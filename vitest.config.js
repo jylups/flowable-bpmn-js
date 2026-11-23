@@ -10,6 +10,7 @@ import { playwright } from '@vitest/browser-playwright';
 export default defineConfig({
   test: {
     include: [ 'test/**/*.spec.js' ],
+    exclude: [ 'test/distro/**', '**/node_modules/**' ],
     browser: {
       enabled: true,
       headless: true,

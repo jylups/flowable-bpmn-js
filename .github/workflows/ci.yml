@@ -40,3 +40,12 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Check the typings
+        run: npm run test:types
+
+      - name: Build the browser distro
+        run: npm run distro
+
+      - name: Test the browser distro
+        run: npm run test:distro
