@@ -18,6 +18,9 @@ export { default as Viewer } from './lib/Viewer.js';
 export { default as NavigatedViewer } from './lib/NavigatedViewer.js';
 
 export { default as FlowableXMLModule } from './lib/xml/index.js';
+
+export { FLOWABLE_TARGET_NAMESPACE, createNewDiagramXML } from './lib/NewDiagram.js';
+export { THEME_COLORS } from './lib/Theme.js';
 export { default as FlowableDrawModule } from './lib/draw/index.js';
 export { default as TouchModule } from './lib/features/touch/index.js';
 export { default as FlowableLintModule } from './lib/lint/module.js';

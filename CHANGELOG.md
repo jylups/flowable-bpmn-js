@@ -4,6 +4,7 @@ All notable changes to this package are documented here.
 
 ## Unreleased
 
+* `FEAT`: open new diagrams as executable Flowable processes (`createDiagram`, `createNewDiagramXML`), and add theme hooks: CSS custom properties for shape, label and watermark colors ([jylups/bpmn-js-env#45](https://github.com/jylups/bpmn-js-env/issues/45))
 * `FEAT`: lint with Flowable rules (service task implementation, valid durations, called element) in the modeler, with bpmn-js-bpmnlint ([jylups/bpmn-js-env#44](https://github.com/jylups/bpmn-js-env/issues/44))
 * `FEAT`: add the optional `TouchModule` for touch editing and its stylesheet, from bpmn-js-touch-interaction as adapted in `@jylups/cmmn-js` ([jylups/bpmn-js-env#43](https://github.com/jylups/bpmn-js-env/issues/43))
 * `FEAT`: draw the typed service tasks with original icons on the canvas, in the palette and in the replace menu ([jylups/bpmn-js-env#42](https://github.com/jylups/bpmn-js-env/issues/42))

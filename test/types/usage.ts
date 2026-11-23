@@ -3,7 +3,16 @@
  * bundler module resolution, as Vite and other bundlers do; bpmn-js' own
  * typings need it.
  */
-import { FlowableXMLModule, Modeler, NavigatedViewer, Viewer } from '@jylups/flowable-bpmn-js';
+import {
+  FlowableXMLModule,
+  Modeler,
+  NavigatedViewer,
+  THEME_COLORS,
+  TouchModule,
+  Viewer,
+  createFlowableLinterConfig,
+  createNewDiagramXML
+} from '@jylups/flowable-bpmn-js';
 
 const container = document.createElement('div');
 
@@ -27,3 +36,16 @@ new Viewer({ container }).importXML('<definitions />');
 new NavigatedViewer({ container }).destroy();
 
 open('<definitions />');
+
+modeler.createDiagram({ processId: 'invoice', processName: 'Invoice' });
+
+const template: string = createNewDiagramXML();
+const stroke: string = THEME_COLORS.defaultStrokeColor;
+
+new Modeler({
+  container,
+  additionalModules: [ TouchModule ],
+  linting: { bpmnlint: createFlowableLinterConfig() }
+});
+
+console.log(template, stroke);

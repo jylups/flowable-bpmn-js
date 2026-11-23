@@ -53,6 +53,37 @@ The properties panel can also be attached later with `modeler.get('propertiesPan
 
 Typings come with the package (`index.d.ts`). bpmn-js' own typings need `"moduleResolution": "bundler"`, as Vite and other bundlers use.
 
+## New diagrams
+
+`modeler.createDiagram()` opens a new Flowable process. The process is executable, has a start event, and gets the target namespace Flowable's own modeler uses (`http://www.flowable.org/processdef`). Pass `{ processId, processName }` to set the process key and name; the key defaults to `Process_` with a random suffix. `createNewDiagramXML(options)` returns the same XML, for apps that keep a template for new files.
+
+The `flowable` namespace is written once the model uses it, so a new process saves without it.
+
+## Theme
+
+The renderers' default colors are CSS custom properties, so a page can restyle shapes and labels with CSS only, for example for a dark theme:
+
+```css
+.my-canvas.dark {
+  background: #1e2026;
+  --flowable-shape-fill: #2a2d35;
+  --flowable-shape-stroke: #d8dbe2;
+  --flowable-label-color: #f0f1f4;
+  --flowable-watermark-color: #c8cad0;
+}
+```
+
+| Property | Default (bpmn-js') | Used for |
+| --- | --- | --- |
+| `--flowable-shape-fill` | `white` | shape fill |
+| `--flowable-shape-stroke` | `hsl(225, 10%, 15%)` | outlines, connections, markers, typed task icons |
+| `--flowable-label-color` | the stroke color | label text |
+| `--flowable-watermark-color` | `#404040` | the bpmn.io watermark, from `assets/flowable-bpmn-js.css` |
+
+Colors set on single elements (bpmn-js' color picker, `bioc:fill`) still win, and an app's own `bpmnRenderer` colors replace these defaults. SVG exports use the defaults. The palette, context pad and popup menus follow diagram-js' own CSS custom properties (see `diagram-js.css`).
+
+The bpmn-js licence requires the bpmn.io watermark to stay fully visible. On a dark canvas, set `--flowable-watermark-color` to a light color; never hide or cover the watermark.
+
 ## Typed service tasks
 
 The modeler's palette and replace menu offer Flowable's typed service tasks: mail, HTTP, shell, Camel, decision (`dmn`), case, send event and external worker. Each is a `bpmn:ServiceTask` with that `flowable:type`; an HTTP task starts with `requestMethod` GET.
