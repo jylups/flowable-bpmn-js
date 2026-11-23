@@ -1,8 +1,20 @@
-/*
+/**
  * @jylups/flowable-bpmn-js
  *
- * bpmn-js modeler and viewer with the Flowable BPMN extensions.
+ * A bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable
+ * moddle descriptor, modeling behaviors and properties panel built in:
  *
- * The public API is added in Phase 4 (jylups/bpmn-js-env#39).
+ *   import { Modeler } from '@jylups/flowable-bpmn-js';
+ *
+ *   const modeler = new Modeler({
+ *     container: '#canvas',
+ *     propertiesPanel: { parent: '#properties' }
+ *   });
+ *
+ *   await modeler.importXML(xml);
  */
-export {};
+export { default as Modeler } from './lib/Modeler.js';
+export { default as Viewer } from './lib/Viewer.js';
+export { default as NavigatedViewer } from './lib/NavigatedViewer.js';
+
+export { default as FlowableXMLModule } from './lib/xml/index.js';

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:activiti="http://activiti.org/bpmn"
+             targetNamespace="http://www.activiti.org/test"
+             id="Definitions_1">
+  <process id="Process_1" isExecutable="true">
+    <userTask id="UserTask_1" name="Review" activiti:assignee="${initiator}">
+      <extensionElements>
+        <activiti:taskListener event="create" class="org.example.CreateListener" />
+        <activiti:designerHint color="blue">keep</activiti:designerHint>
+      </extensionElements>
+    </userTask>
+    <boundaryEvent id="NotFound" attachedToRef="UserTask_1">
+      <errorEventDefinition errorRef="notFound" />
+    </boundaryEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="UserTask_1_di" bpmnElement="UserTask_1">
+        <dc:Bounds x="160" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NotFound_di" bpmnElement="NotFound">
+        <dc:Bounds x="192" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -4,11 +4,16 @@
   "description": "bpmn-js modeler and viewer with the Flowable BPMN extensions",
   "type": "module",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
   "files": [
     "index.js",
+    "index.d.ts",
     "lib",
     "dist"
   ],
@@ -16,7 +21,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "dev": "vitest",
-    "all": "npm run lint && npm test"
+    "distro": "rollup -c",
+    "test:distro": "vitest run --config vitest.distro.config.js",
+    "all": "npm run lint && npm test && npm run test:types && npm run distro && npm run test:distro",
+    "test:types": "tsc -p test/types"
   },
   "repository": {
     "type": "git",
@@ -41,16 +49,26 @@
     "node": ">=24"
   },
   "dependencies": {
+    "@bpmn-io/properties-panel": "^3.60.2",
+    "@jylups/bpmn-js-properties-panel-flowable": "^0.1.0",
+    "@jylups/flowable-bpmn-js-behaviors": "^0.1.0",
+    "@jylups/flowable-bpmn-moddle": "^0.1.0",
     "bpmn-js": "^18.33.1",
-    "bpmn-js-properties-panel": "^5.65.4",
-    "@bpmn-io/properties-panel": "^3.60.2"
+    "bpmn-js-properties-panel": "^5.65.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.2",
     "@vitest/browser-playwright": "^5.1.1",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "playwright": "^1.65.1",
+    "rollup": "4.68.0",
+    "typescript": "7.0.2",
     "vitest": "^5.1.1"
-  }
+  },
+  "types": "./index.d.ts"
 }
