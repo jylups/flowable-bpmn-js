@@ -11,7 +11,21 @@ import type { ModuleDeclaration } from 'didi';
  *
  * Give the properties panel a place with `propertiesPanel: { parent }`.
  */
-export class Modeler<ServiceMap = null> extends BpmnModeler<ServiceMap> {}
+export class Modeler<ServiceMap = null> extends BpmnModeler<ServiceMap> {
+
+  /**
+   * Opens a new Flowable process: an executable process with a start event.
+   */
+  createDiagram(options?: NewDiagramOptions): ReturnType<BpmnModeler['importXML']>;
+}
+
+export type NewDiagramOptions = {
+
+  /** The process key; Process_ and a random suffix by default. */
+  processId?: string;
+
+  processName?: string;
+};
 
 /**
  * A bpmn-js viewer for Flowable models.
@@ -69,3 +83,25 @@ export const flowableLintConfig: { rules: Record<string, string> };
  * configuration that uses `flowable/<rule>` rules.
  */
 export function createFlowableLinterConfig(config?: object): { config: object; resolver: object };
+
+/**
+ * The XML of a new Flowable process: an executable process with a start
+ * event, the Flowable namespace declared, and Flowable's target namespace.
+ */
+export function createNewDiagramXML(options?: NewDiagramOptions): string;
+
+/**
+ * The target namespace Flowable's modeler gives new processes.
+ */
+export const FLOWABLE_TARGET_NAMESPACE: string;
+
+/**
+ * The default renderer colors as CSS custom properties with bpmn-js'
+ * defaults as fallbacks: --flowable-shape-fill, --flowable-shape-stroke and
+ * --flowable-label-color.
+ */
+export const THEME_COLORS: {
+  defaultFillColor: string;
+  defaultStrokeColor: string;
+  defaultLabelColor: string;
+};
