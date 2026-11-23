@@ -46,6 +46,18 @@ The properties panel can also be attached later with `modeler.get('propertiesPan
 
 Typings come with the package (`index.d.ts`). bpmn-js' own typings need `"moduleResolution": "bundler"`, as Vite and other bundlers use.
 
+## Typed service tasks
+
+The modeler's palette and replace menu offer Flowable's typed service tasks: mail, HTTP, shell, Camel, decision (`dmn`), case, send event and external worker. Each is a `bpmn:ServiceTask` with that `flowable:type`; an HTTP task starts with `requestMethod` GET.
+
+Choosing a type in the replace menu is one undo step:
+
+- An element that isn't a service task is replaced with one, and the behaviors drop what a service task can't hold.
+- What the previous implementation set is removed: its Java class or expression, result variable options, case and external worker attributes, fields, HTTP handlers, and event and worker parameters.
+- Listeners, async settings, multi-instance and the form key stay.
+
+A typed task also gets a "Service task" entry that removes the type.
+
 ## Browser distro
 
 For pages without a bundler, `dist/` has one script per entry point. Each exposes the global `FlowableBpmnJS`:
