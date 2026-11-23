@@ -14,6 +14,7 @@ bpmn-js modeler and viewers for Flowable BPMN models, with the Flowable moddle d
 | `FlowableXMLModule` | the import and save steps below, included in all three |
 | `FlowableDrawModule` | draws the typed service tasks with their icons, included in all three |
 | `TouchModule` | touch editing for the modeler, optional (see below) |
+| `FlowableLintModule` | linting with the Flowable rules, included in `Modeler` (see below) |
 
 All three read and write models as Flowable needs them:
 
@@ -33,6 +34,7 @@ import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import '@bpmn-io/properties-panel/dist/assets/properties-panel.css';
+import 'bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 import '@jylups/flowable-bpmn-js/assets/flowable-bpmn-js.css';
 
 const modeler = new Modeler({
@@ -45,7 +47,9 @@ await modeler.importXML(xml);
 const { xml: saved } = await modeler.saveXML({ format: true });
 ```
 
-The properties panel can also be attached later with `modeler.get('propertiesPanel').attachTo(element)`. The same CSS files ship in `@jylups/flowable-bpmn-js/dist/assets/`.
+The same CSS files ship in `@jylups/flowable-bpmn-js/dist/assets/`. The linting stylesheet also hides each issue list until it is opened, so leaving it out puts the lists over the diagram.
+
+The properties panel can also be attached later with `modeler.get('propertiesPanel').attachTo(element)`.
 
 Typings come with the package (`index.d.ts`). bpmn-js' own typings need `"moduleResolution": "bundler"`, as Vite and other bundlers use.
 
@@ -62,6 +66,28 @@ Choosing a type in the replace menu is one undo step:
 A typed task also gets a "Service task" entry that removes the type.
 
 Typed tasks are drawn with their own icon instead of the service task gear, in the modeler and the viewers. The icons were drawn for this project. `assets/flowable-bpmn-js.css` shows them in the palette and the replace menu; it fills them with the text color, so they follow the theme like the bpmn-js icons.
+
+## Linting
+
+The modeler lints the diagram while it is edited, with [bpmnlint](https://github.com/bpmn-io/bpmnlint) and [bpmn-js-bpmnlint](https://github.com/bpmn-io/bpmn-js-bpmnlint). Issues show on the elements; a button in the corner counts them and turns the overlays on and off. Its stylesheet is `bpmn-js-bpmnlint.css`.
+
+| Rule | Reports |
+| --- | --- |
+| `flowable/service-task-implementation` | a service task without a Java class, expression, delegate expression, type or web service operation; a typed task without what it needs: HTTP request URL, shell command, decision table key, case definition key, send event key, external worker topic |
+| `flowable/valid-durations` | a user task due date, timer date, duration, cycle or cycle end date, or retry time cycle that isn't valid ISO 8601 (or, for cycles, a cron expression); a timer without a value. Values with an expression pass |
+| `flowable/called-element` | a call activity without a called element |
+
+All are errors. To list the issues in a problems view, listen to `linting.completed`:
+
+```js
+modeler.on('linting.completed', ({ issues }) => {
+  // { elementId: [ { message, category: 'error' | 'warn', rule } ] }
+});
+```
+
+Options:
+- `linting: { active: false }` starts with the overlays hidden. The issues are still reported.
+- `linting: { bpmnlint }` sets another linter configuration. `createFlowableLinterConfig(config)` builds one that can use the `flowable/…` rules, and `FLOWABLE_RULES` has the rules for a resolver of your own.
 
 ## Touch
 
@@ -95,6 +121,7 @@ For pages without a bundler, `dist/` has one script per entry point. Each expose
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-js.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/properties-panel.css">
+<link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/bpmn-js-bpmnlint.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/flowable-bpmn-js.css">
 <link rel="stylesheet" href="https://unpkg.com/@jylups/flowable-bpmn-js/dist/assets/flowable-bpmn-js-touch.css">
 <script src="https://unpkg.com/@jylups/flowable-bpmn-js/dist/flowable-bpmn-modeler.production.min.js"></script>

@@ -10,6 +10,7 @@ import xml from './fixtures/tasks.bpmn?raw';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import 'bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 import '../assets/flowable-bpmn-js.css';
 
 
@@ -267,7 +268,9 @@ describe('touch', function() {
 
       // given
       tap(hit('UserTask_1'));
-      await new Promise(resolve => requestAnimationFrame(resolve));
+
+      // as a person does, past the double tap time
+      await new Promise(resolve => setTimeout(resolve, 400));
 
       const entry = document.querySelector('.djs-context-pad [data-action="connect"]');
 
