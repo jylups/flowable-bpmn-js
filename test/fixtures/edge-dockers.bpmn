@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_dockers" targetNamespace="http://www.flowable.org/processdef">
+  <process id="dockers" isExecutable="true">
+    <startEvent id="Start"/>
+    <sequenceFlow id="Flow" sourceRef="Start" targetRef="End"/>
+    <endEvent id="End"/>
+  </process>
+  <bpmndi:BPMNDiagram id="Diagram_dockers">
+    <bpmndi:BPMNPlane id="Plane_dockers" bpmnElement="dockers">
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="100" y="100" width="30" height="30"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="200" y="101" width="28" height="28"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_di" bpmnElement="Flow" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+        <di:waypoint x="130" y="115"/>
+        <di:waypoint x="200" y="115"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

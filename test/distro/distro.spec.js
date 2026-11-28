@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { cleanUp, create, nextFrame } from '../helper.js';
 
 import xml from '../fixtures/activiti.bpmn?raw';
+import dockersXml from '../fixtures/edge-dockers.bpmn?raw';
 
 import modelerDevelopment from '../../dist/flowable-bpmn-modeler.development.js?raw';
 import modelerProduction from '../../dist/flowable-bpmn-modeler.production.min.js?raw';
@@ -93,6 +94,36 @@ describe('browser distro', function() {
       // then
       expect(instance.get('elementRegistry').get('UserTask_1').businessObject.get('flowable:assignee')).toBe('${initiator}');
       expect(instance.get('modeling', false)).toBeFalsy();
+    });
+
+  });
+
+
+  [
+    [ 'modeler (development)', modelerDevelopment ],
+    [ 'modeler (production)', modelerProduction ],
+    [ 'viewer (development)', viewerDevelopment ],
+    [ 'viewer (production)', viewerProduction ],
+    [ 'navigated viewer (development)', navigatedViewerDevelopment ],
+    [ 'navigated viewer (production)', navigatedViewerProduction ]
+  ].forEach(([ name, code ]) => {
+
+    it(`${ name } reads the edge dockers Flowable writes, without warnings`, async function() {
+
+      // given
+      const Constructor = load(code);
+      const { instance } = create(Constructor);
+
+      // when
+      const { warnings } = await instance.importXML(dockersXml);
+
+      // then
+      expect(warnings.map(warning => warning.message)).toEqual([]);
+
+      const edge = instance.get('elementRegistry').get('Flow').di;
+
+      expect(edge.get('flowable:sourceDockerX')).toBe('15.0');
+      expect(edge.get('flowable:targetDockerY')).toBe('14.0');
     });
 
   });

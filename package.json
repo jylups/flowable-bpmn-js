@@ -56,7 +56,7 @@
     "@bpmn-io/properties-panel": "^3.60.2",
     "@jylups/bpmn-js-properties-panel-flowable": "^0.1.0",
     "@jylups/flowable-bpmn-js-behaviors": "^0.1.0",
-    "@jylups/flowable-bpmn-moddle": "^0.1.0",
+    "@jylups/flowable-bpmn-moddle": "^0.1.1",
     "bpmn-js": "^18.33.1",
     "bpmn-js-bpmnlint": "^0.25.0",
     "bpmn-js-properties-panel": "^5.65.4",
