@@ -4,6 +4,8 @@ All notable changes to this package are documented here.
 
 ## Unreleased
 
+## 0.1.1
+
 * `FIX`: build the browser distro with `@jylups/flowable-bpmn-moddle` 0.1.1, and require it, so the bundles read the edge dockers Flowable writes on every `bpmndi:BPMNEdge` (`flowable:sourceDockerX`, `sourceDockerY`, `targetDockerX`, `targetDockerY`) without an import warning for each ([jylups/bpmn-js-env#104](https://github.com/jylups/bpmn-js-env/issues/104))
 
 ## 0.1.0
